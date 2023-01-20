@@ -1,7 +1,8 @@
 // cart-dropdown.styles.scss 
 .cart-dropdown-container {
      position: absolute;
-     width: 240px;
+    //  width: 240px;
+     width: 310px;
      height: 340px;
      display: flex;
      flex-direction: column;
@@ -23,9 +24,9 @@
          
     }
     // Workaround to hide scrollbar in cart dropdown
-    .cart-items::-webkit-scrollbar{
-        display: none;
-    }
+    // .cart-items::-webkit-scrollbar{
+    //     display: none;
+    // }
      button {
          margin-top: auto;
          font-size: 14px;
