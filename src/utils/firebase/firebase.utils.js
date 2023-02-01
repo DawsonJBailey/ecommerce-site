@@ -35,30 +35,29 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
     batch.set(docRef, object);
   });
   await batch.commit();
-  console.log('done');
 };
 
 export const getCategoriesAndDocuments = async () => {
   const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
   const querySnapshot = await getDocs(q);
-  
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const {title, items} = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {})
 
-  return categoryMap;
+  return querySnapshot.docs.map(docSnapshot => docSnapshot.data())
+  
+  // const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+  //   const {title, items} = docSnapshot.data();
+  //   acc[title.toLowerCase()] = items;
+  //   return acc;
+  // }, {})
+
+  // return categoryMap;
 
 }
 
 export const createUserDocumentFromAuth = async (userAuth, additonalInformation = {}) => {
   if(!userAuth) return;
   const userDocRef = doc(db, "users", userAuth.uid);
-  console.log(userDocRef);
   const userSnapshot = await getDoc(userDocRef);
-  console.log(userSnapshot);
   // If user data does not exist
   if (!userSnapshot.exists()) {
     // Getting userAuth stuff from sign-in compnent response

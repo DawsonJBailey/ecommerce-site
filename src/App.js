@@ -1,16 +1,33 @@
-// import logo from './logo.svg';
-// import './App.css';
-// import './categories.styles.scss';
-import CategoryItem from "./components/directory-item/directory-item.component";
-import Directory from "./components/directory/directory.component";
+import { useDispatch } from "react-redux";
 import Home from "./routes/home/home.component";
 import Shop from "./routes/shop/shop.component";
+import { useEffect } from "react";
 import Navigation from "./routes/navigation/navigation.component";
 import Authentication from "./routes/authentication/authentication.component";
 import CheckOut from "./routes/checkout/checkout.component";
 import { Routes, Route, Outlet } from "react-router-dom";
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+} from "./utils/firebase/firebase.utils";
+import {setCurrentUser} from './store/user/user.action'
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // Runs every time user signs in or signs out
+    const unsubscribe = onAuthStateChangedListener((user) => {
+      console.log(user);
+      if (user) {
+        createUserDocumentFromAuth(user);
+      }
+      // If user signs out -> store null
+      // If user signs in  -> store user
+      dispatch(setCurrentUser(user));
+    });
+    return unsubscribe;
+  }, []);
+
   return (
     <Routes>
       <Route path={"/"} element={<Navigation />}>
