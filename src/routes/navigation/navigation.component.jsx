@@ -8,6 +8,7 @@ import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { CartContext } from "../../contexts/cart.context";
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import {NavigationContainer, NavLinks, NavLink, LogoContainer} from './navigation.styles';
 
 const Navigation = () => {
@@ -17,7 +18,8 @@ const Navigation = () => {
   // But we moved it to a function in another file to export here
   const currentUser = useSelector(selectCurrentUser);
   
-  const {isCartOpen, setIsCartOpen} = useContext(CartContext);
+  // const {isCartOpen, setIsCartOpen} = useContext(CartContext);
+  const isCartOpen = useSelector(selectIsCartOpen);
   // Using styled components here
   return (
     <Fragment>
