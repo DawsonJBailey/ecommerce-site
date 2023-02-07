@@ -10,21 +10,25 @@ import { CategoriesProvider } from "./contexts/categories.context";
 import { CartProvider } from "./contexts/cart.context";
 import { store, persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { stripePromise } from "./utils/stripe/stripe.utils";
+import {Elements} from '@stripe/react-stripe-js'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-      <BrowserRouter>
-        {/* <UserProvider> */}
+        <BrowserRouter>
+          {/* <UserProvider> */}
           {/* <CategoriesProvider> */}
-            {/* <CartProvider> */}
-              <App />
-            {/* </CartProvider> */}
+          {/* <CartProvider> */}
+          <Elements stripe={stripePromise}>
+            <App />
+          </Elements>
+          {/* </CartProvider> */}
           {/* </CategoriesProvider> */}
-        {/* </UserProvider> */}
-      </BrowserRouter>
+          {/* </UserProvider> */}
+        </BrowserRouter>
       </PersistGate>
     </Provider>
   </React.StrictMode>

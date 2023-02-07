@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import { Fragment, useContext } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import { UserContext } from "../../contexts/user.context";
@@ -10,8 +10,10 @@ import { selectCurrentUser } from "../../store/user/user.selector";
 import { CartContext } from "../../contexts/cart.context";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import {NavigationContainer, NavLinks, NavLink, LogoContainer} from './navigation.styles';
+import { signOutStart } from '../../store/user/user.action'
 
 const Navigation = () => {
+  const dispatch = useDispatch();
   // const {currentUser, setCurrentUser} = useContext(UserContext);
   // For redux you get the value you need from state like this
   // const currentUser = useSelector((state) => state.user.currentUser);
@@ -20,6 +22,9 @@ const Navigation = () => {
   
   // const {isCartOpen, setIsCartOpen} = useContext(CartContext);
   const isCartOpen = useSelector(selectIsCartOpen);
+
+  const signOutUser = () => dispatch(signOutStart())
+
   // Using styled components here
   return (
     <Fragment>
